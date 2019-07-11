@@ -1,0 +1,52 @@
+# Importar o modulo do ARCGIS=
+import arcpy
+
+
+# Locais de variaveis
+Folder_Location = "C:/"
+ICMS_VERDE = "C:/ICMS_VERDE"
+ICMS_VERDE_gdb = "C:/ICMS_VERDE\\ICMS_VERDE.gdb"
+MUNICIPIOS_SHP = "C:\\VETORES_ICMS\\MUNICIPIOS\\MUNICIPIOS.shp"
+MASSA_DAGUA_shp = "C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp"
+MASSA_DAGUA_shp_2 = "C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp"
+MASSA_DAGUA_shp_3_ = "C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp"
+FUSO_21_shp = "C:\\VETORES_ICMS\\FUSOS\\FUSO_21.shp"
+FUSO_22_shp = "C:\\VETORES_ICMS\\FUSOS\\FUSO_22.shp"
+FUSO_23_shp = "C:\\VETORES_ICMS\\FUSOS\\FUSO_23.shp"
+Massa_Dagua21 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Massa_Dagua21"
+Massa_Dagua22 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Massa_Dagua22"
+Massa_Dagua23 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Massa_Dagua23"
+Municipios21 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Municipios21"
+Municipios22 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Municipios22"
+Municipios23 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Municipios23"
+
+Area_Militar21 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Area_Militar21"
+Area_Militar22 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Area_Militar22"
+Area_Militar23 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Area_Militar23"
+Area_Quilombolas21 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Quilombolas21"
+Area_Quilombolas22 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Quilombolas22"
+Area_Quilombolas23 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Quilombolas23"
+Area_Urbana21 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Area_Urbana21"
+Area_Urbana22 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Area_Urbana22"
+Area_Urbana23 = "C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Area_Urbana23"
+
+# Criar Pasta
+arcpy.CreateFolder_management(Folder_Location, "ICMS_VERDE")
+# Criar Geodatabase
+arcpy.CreateFileGDB_management(ICMS_VERDE, "ICMS_VERDE", "CURRENT")
+# Criar Datasets
+arcpy.CreateFeatureDataset_management(ICMS_VERDE_gdb, "VETORES21", "PROJCS['SIRGAS_2000_UTM_Zone_21S',GEOGCS['GCS_SIRGAS_2000',DATUM['D_SIRGAS_2000',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',10000000.0],PARAMETER['Central_Meridian',-57.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]];-5120900 1900 10000;-100000 10000;-100000 10000;0,001;0,001;0,001;IsHighPrecision")
+arcpy.CreateFeatureDataset_management(ICMS_VERDE_gdb, "VETORES22", "PROJCS['SIRGAS_2000_UTM_Zone_22S',GEOGCS['GCS_SIRGAS_2000',DATUM['D_SIRGAS_2000',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',10000000.0],PARAMETER['Central_Meridian',-51.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]];-5120900 1900 10000;-100000 10000;-100000 10000;0,001;0,001;0,001;IsHighPrecision")
+arcpy.CreateFeatureDataset_management(ICMS_VERDE_gdb, "VETORES23", "PROJCS['SIRGAS_2000_UTM_Zone_23S',GEOGCS['GCS_SIRGAS_2000',DATUM['D_SIRGAS_2000',SPHEROID['GRS_1980',6378137.0,298.257222101]],PRIMEM['Greenwich',0.0],UNIT['Degree',0.0174532925199433]],PROJECTION['Transverse_Mercator'],PARAMETER['False_Easting',500000.0],PARAMETER['False_Northing',10000000.0],PARAMETER['Central_Meridian',-45.0],PARAMETER['Scale_Factor',0.9996],PARAMETER['Latitude_Of_Origin',0.0],UNIT['Meter',1.0]];-5120900 1900 10000;-100000 10000;-100000 10000;0,001;0,001;0,001;IsHighPrecision")
+# Intercessao
+arcpy.Intersect_analysis("C:\\VETORES_ICMS\\FUSOS\\FUSO_21.shp #;'C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp' #", Massa_Dagua21, "ALL", "", "INPUT")
+arcpy.Intersect_analysis("C:\\VETORES_ICMS\\FUSOS\\FUSO_22.shp #;'C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp' #", Massa_Dagua22, "ALL", "", "INPUT")
+arcpy.Intersect_analysis("'C:\\VETORES_ICMS\\MASSA DAGUA\\MASSA DAGUA.shp' #;C:\\VETORES_ICMS\\FUSOS\\FUSO_23.shp #", Massa_Dagua23, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\MUNICIPIOS\\MUNICIPIOS.shp' #;C:\\VETORES_ICMS\\FUSOS\\FUSO_21.shp #", Municipios21, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\MUNICIPIOS\\MUNICIPIOS.shp' #;C:\\VETORES_ICMS\\FUSOS\\FUSO_22.shp #", Municipios22, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\MUNICIPIOS\\MUNICIPIOS.shp' #;C:\\VETORES_ICMS\\FUSOS\\FUSO_21.shp #", Municipios23, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\AREA_MILITAR\\AREA_MILITAR.shp' #;C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Municipios21 #", Area_Militar21, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\AREA_MILITAR\\AREA_MILITAR.shp' #;C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Municipios22 #", Area_Militar22, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\AREA_MILITAR\\AREA_MILITAR.shp' #;C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES23\\Municipios23 #", Area_Militar23, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\AREA_URBANA\\AREA_URBANA.shp' #;C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES21\\Municipios21 #", Area_Urbana21, "ALL", "", "INPUT")
+arcpy.Intersect_analysis ("'C:\\VETORES_ICMS\\AREA_URBANA\\AREA_URBANA.shp' #;C:\\ICMS_VERDE\\ICMS_VERDE.gdb\\VETORES22\\Municipios22 #", Area_Urbana22, "ALL", "", "INPUT")
